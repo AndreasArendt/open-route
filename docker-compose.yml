@@ -7,7 +7,7 @@ services:
     ports:
       - "8989:8989"
     environment:
-      JAVA_OPTS: "${GH_JAVA_OPTS:- -Xms4g -Xmx10g}"
+      JAVA_OPTS: "${GH_JAVA_OPTS:--Xms4g -Xmx10g}"
     volumes:
       - ./data/osm:/data/osm:ro
       - gh-cache:/data/graph-cache
