@@ -31,5 +31,17 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  ui:
+    build:
+      context: ./ui
+    environment:
+      VITE_API_BASE_URL: "http://localhost:8080"
+    ports:
+      - "5173:5173"
+    depends_on:
+      planner:
+        condition: service_started
+    restart: unless-stopped
+
 volumes:
   gh-cache:
