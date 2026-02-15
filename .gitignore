@@ -1,0 +1,28 @@
+# --- OS / Editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Environment / secrets ---
+.env
+.env.*
+!.env.example
+
+# --- Rust ---
+/planner/target/
+/planner/**/target/
+
+# --- Logs ---
+*.log
+
+# --- Local data (do not commit OSM extracts or generated data) ---
+/data/
+/data/**
+
+# --- Optional build artifacts ---
+dist/
+build/
+node_modules/

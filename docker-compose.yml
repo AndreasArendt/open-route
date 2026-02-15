@@ -1,0 +1,35 @@
+services:
+  graphhopper:
+    build:
+      context: ./graphhopper
+      args:
+        GH_REF: "11.0"
+    ports:
+      - "8989:8989"
+    environment:
+      JAVA_OPTS: "${GH_JAVA_OPTS:- -Xms4g -Xmx10g}"
+    volumes:
+      - ./data/osm:/data/osm:ro
+      - gh-cache:/data/graph-cache
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "sh", "-c", "wget -qO- http://127.0.0.1:8989/ >/dev/null || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  planner:
+    build:
+      context: ./planner
+    environment:
+      GH_BASE_URL: "http://graphhopper:8989"
+      RUST_LOG: "info"
+    ports:
+      - "8080:8080"
+    depends_on:
+      graphhopper:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  gh-cache:

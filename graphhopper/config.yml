@@ -1,0 +1,34 @@
+graphhopper:
+  datareader.file: /data/osm/bavaria.osm.pbf
+  graph.location: /data/graph-cache
+
+  # Required by GH 11.x (performance)
+  import.osm.ignored_highways: motorway,trunk
+
+  profiles:
+    - name: bike
+      custom_model_files: [bike.json]
+
+  # MUST be inside "graphhopper:" (not top-level)
+  graph.encoded_values: bike_access, bike_average_speed, road_access, bike_priority, bike_road_access, mtb_rating, hike_rating, country, road_class
+
+  prepare.min_network_size: 200
+
+server:
+  application_connectors:
+    - type: http
+      port: 8989
+  admin_connectors:
+    - type: http
+      port: 8990
+  request_log:
+    appenders: []
+
+logging:
+  level: INFO
+  loggers:
+    com.graphhopper: INFO
+  appenders:
+    - type: console
+      time_zone: UTC
+      log_format: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
