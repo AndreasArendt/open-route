@@ -66,6 +66,74 @@ This project is the foundation for building a Komoot-style route suggestion syst
    - Suggestions are plotted directly on an interactive map.
    - Click a route card or route chip to focus that alternative on the map.
 
+## IDE-First Development (Recommended)
+
+If you want simpler debugging in your IDE, run only GraphHopper in Docker and run Planner/UI locally.
+
+### Option A: Single command
+
+```bash
+./scripts/dev.sh
+```
+
+This does:
+- `docker compose up -d graphhopper`
+- `docker compose stop planner ui` (avoids local port conflicts)
+- `cargo run` in `planner` (with `GH_BASE_URL=http://localhost:8989`)
+- `npm run dev` in `ui`
+
+Stop GraphHopper when you are done:
+
+```bash
+./scripts/dev-stop.sh
+```
+
+### Option B: Manual (best for breakpoints)
+
+1. Start only GraphHopper:
+
+   ```bash
+   docker compose up -d graphhopper
+   ```
+
+2. In your IDE, run/debug Planner from `/planner`:
+
+   ```bash
+   cargo run
+   ```
+
+3. In your IDE terminal, start UI from `/ui`:
+
+   ```bash
+   npm install
+   npm run dev -- --host 0.0.0.0 --port 5173
+   ```
+
+4. Open [http://localhost:5173](http://localhost:5173)
+
+All `println!`/`dbg!` output from planner appears directly in your IDE run/debug console.
+
+## Full-Docker Auto-Update (Optional)
+
+If you prefer running planner + UI in Docker, use Compose watch mode:
+
+1. Start the stack:
+
+   ```bash
+   docker compose up --build -d
+   ```
+
+2. Start file watching in a second terminal:
+
+   ```bash
+   docker compose watch
+   ```
+
+What happens on changes:
+- `planner/src` and planner build files trigger a `planner` image rebuild.
+- `ui/src` and `ui/index.html` sync directly into the running UI container (Vite hot reload).
+- `ui/package.json` or `ui/Dockerfile` triggers a `ui` image rebuild.
+
 ## Planner API
 
 - `GET /health`

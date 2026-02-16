@@ -1,0 +1,3 @@
+[env]
+GH_BASE_URL = "http://localhost:8989"
+RUST_LOG = "info"
