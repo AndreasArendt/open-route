@@ -10,7 +10,7 @@ graphhopper:
       custom_model_files: [bike.json]
 
   # MUST be inside "graphhopper:" (not top-level)
-  graph.encoded_values: bike_access, bike_average_speed, road_access, bike_priority, bike_road_access, mtb_rating, hike_rating, country, road_class
+  graph.encoded_values: bike_access, bike_average_speed, road_access, bike_priority, bike_road_access, mtb_rating, hike_rating, country, road_class, surface
 
   prepare.min_network_size: 200
 

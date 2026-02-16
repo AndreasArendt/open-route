@@ -46,7 +46,15 @@ pub(super) fn build_roundtrip_json_body(start: (f64, f64)) -> Value {
         "custom_model": {
             "priority": [
                 { "if": "road_class == MOTORWAY || road_class == TRUNK", "multiply_by": 0.0 },
-                { "if": "road_class == PRIMARY", "multiply_by": 0.4 }
+                { "if": "road_class == PRIMARY", "multiply_by": 0.4 },
+                { "if": "road_class == SECONDARY", "multiply_by": 1.0 },
+                { "if": "road_class == TERTIARY", "multiply_by": 1.0 },
+                { "if": "road_class == RESIDENTIAL", "multiply_by": 0.8 },
+                { "if": "road_class == SERVICE", "multiply_by": 0.7 },
+                { "if": "road_class == UNCLASSIFIED", "multiply_by": 1.0 },
+                { "if": "road_class == CYCLEWAY", "multiply_by": 1.0 },
+                { "if": "road_class == FOOTWAY || road_class == PATH || road_class == PEDESTRIAN", "multiply_by": 1.0 },
+                { "if": "surface != PAVED", "multiply_by": 0.6 }
             ]
         }
 
